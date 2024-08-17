@@ -765,6 +765,15 @@ rpc_setmouse(Client *c, Point p)
 - (void)resetCursorRects {
 	[super resetCursorRects];
 	[self addCursorRect:self.bounds cursor:self.currentCursor];
+
+	if((([self.win styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask) && ([self.win.screen safeAreaInsets].top != 0)){
+		NSRect r;
+		r.origin.x = 0;
+		r.origin.y = 0;
+		r.size.width = self.bounds.size.width;
+		r.size.height = 44;
+		[self addCursorRect:r cursor:self.currentCursor];
+	}
 }
 
 // conforms to protocol NSTextInputClient
